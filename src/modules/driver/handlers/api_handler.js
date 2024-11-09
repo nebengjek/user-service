@@ -1,6 +1,6 @@
 
 const commonHelper = require('all-in-one');
-
+const _ = require('lodash');
 const wrapper = commonHelper.Wrapper;
 const commandHandler = require('../repositories/commands/command_handler');
 const commandModel = require('../repositories/commands/command_model');
@@ -48,8 +48,26 @@ const registerDriver = async (req, res) => {
   sendResponse(await postRequest(validatePayload));
 };
 
+const updateDataDriver = async (req, res) => {
+  const { email,mobileNumber,userId } = req.userMeta;
+  req.body.mobileNumber = _.isEmpty(mobileNumber) ? req.body.mobileNumber : mobileNumber
+  req.body.email = _.isEmpty(email) ? req.body.email : email
+  const payload = req.body;
+  const validatePayload = commonHelper.isValidPayload(payload, commandModel.driver);
+  const postRequest = async (result) => {
+    return result.err ? result : commandHandler.updateDataDriver(userId,result.data);
+  };
+  const sendResponse = async (result) => {
+    (result.err)
+      ? wrapper.response(res, 'fail', result, 'Update User', httpError.CONFLICT)
+      : wrapper.response(res, 'success', result, 'Update User', http.OK);
+  };
+  sendResponse(await postRequest(validatePayload));
+};
+
 module.exports = {
   loginDriver,
   registerDriver,
-  getDriver
+  getDriver,
+  updateDataDriver
 };

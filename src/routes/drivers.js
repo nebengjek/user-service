@@ -6,4 +6,5 @@ module.exports = (server) => {
   server.post('/driver/v1/login', basicAuth.isAuthenticated, userHandler.loginDriver);
   server.get('/driver/v1/profile', jwtAuth.verifyToken, userHandler.getDriver);
   server.post('/driver/v1/register', basicAuth.isAuthenticated, userHandler.registerDriver);
+  server.put('/driver/v1/profile', jwtAuth.verifyToken, userHandler.updateDataDriver);
 };

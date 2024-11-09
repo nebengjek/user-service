@@ -16,7 +16,13 @@ const registerDriver = async (payload) => {
   return postCommand(payload);
 };
 
+const updateDataDriver = async (userId,payload) => {
+  const postCommand = (uuid,pyld) => user.updateDataDriver(uuid,pyld);
+  return postCommand(userId,payload);
+};
+
 module.exports = {
   loginDriver,
-  registerDriver
+  registerDriver,
+  updateDataDriver
 };
