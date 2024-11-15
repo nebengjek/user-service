@@ -81,6 +81,3 @@ $ npm run lint:fix
 * [Npm] - Dependency Management
 * [Docker] - Container Management
 
-### SonarCloud Report
-
-[Link to SonarCloud Report](<https://sonarcloud.io/summary/new_code?id=thrive-roadshow_node-thrive&branch=main>)
