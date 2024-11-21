@@ -102,6 +102,19 @@ class User {
       commonHelper.log(['ERROR'],`${ctx} failed update data`);
       return wrapper.error(new InternalServerError('failed update data'));
     }
+    
+    // create wallet
+    const CreateWallet = await this.command.insertOneWallet({
+      userId,
+      balance: 0,
+      lastUpdated:moment().toDate(),
+      transactionLog: []
+    });
+    if (CreateWallet.err){
+      commonHelper.log(['ERROR'],`${ctx} failed create wallet data`);
+      return wrapper.error(new InternalServerError('failed create wallet data'));
+    }
+
     return wrapper.data('updated');
   }
 }
