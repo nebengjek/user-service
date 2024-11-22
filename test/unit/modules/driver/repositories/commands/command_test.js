@@ -48,5 +48,27 @@ describe('User-command', () => {
       assert.equal(res.data.username, queryResult.data.username);
     });
   });
+  
+  describe('insertOneWallet', () => {
+    const queryResult = {
+      'err': null,
+      'data': {
+        '_id': '5bac53b45ea76b1e9bd58e1c',
+        'userId': '5bac53b41e9bd58e1c-5bac53b45ea76b1e9bd58e1c-5bac53b45ea76b1e9b',
+        'balance': 0
+      }
+    };
+
+    it('should success to insert data to db', async() => {
+
+      const db = {
+        insertOne: sinon.stub().resolves(queryResult),
+        setCollection: sinon.stub()
+      };
+      const command = new Command(db);
+      const res = await command.insertOneWallet({}, {});
+      assert.equal(res.data._id, queryResult.data._id);
+    });
+  });
 
 });

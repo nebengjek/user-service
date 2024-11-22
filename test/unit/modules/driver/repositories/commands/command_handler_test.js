@@ -44,4 +44,18 @@ describe('User-commandHandler', () => {
       User.prototype.registerDriver.restore();
     });
   });
+  
+  describe('updateDataDriver', () => {
+
+    it('should info success updateDataDriver', async() => {
+      sinon.stub(User.prototype, 'updateDataDriver').resolves(data);
+
+      const rs = await commandHandler.updateDataDriver(payload);
+
+      assert.notEqual(rs.data, null);
+      assert.equal(rs.code, 200);
+
+      User.prototype.updateDataDriver.restore();
+    });
+  });
 });

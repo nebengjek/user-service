@@ -1,6 +1,6 @@
 const assert = require('assert');
 const sinon = require('sinon');
-
+const moment = require('moment');
 const commonHelper = require('all-in-one');
 const command = require('../../../../../../src/modules/driver/repositories/commands/command');
 const query = require('../../../../../../src/modules/driver/repositories/queries/query');
@@ -111,6 +111,105 @@ describe('User-domain', () => {
       assert.notEqual(res.err, null);
       common.filterEmailOrMobileNumber.restore();
       query.prototype.findOneUser.restore();
+    });
+  });
+  
+  describe('updateDataDriver', () => {
+    const payload = {
+      "email": "farid@gmail.com",
+      "city": "Jakarta",
+      "province": "DKI Jakarta",
+      "jenisKendaraan": "Honda Scoopy",
+      "nopol": "B 1234 AB",
+      "kontakKeluargaLainnya": "+628987654321"
+    }    
+    it('should success updateDataDriver', async() => {
+      sinon.stub(query.prototype, 'findOneUser').resolves({ data: {
+        mitra:true,
+        mobileNumber: "+6281190090677",
+        fullName: "Farid Tri Wicaksono",
+        password: "391b8d7b4101ac8860d988dbb7ad288e:52b8c24150d7a696700626249285d6dc",
+        userId: "2a4c03c4-6281-4310-bf6d-78470889a01e"
+      } });
+      sinon.stub(command.prototype, 'upsertOneUser').resolves(queryResult);
+      sinon.stub(command.prototype, 'insertOneWallet').resolves(queryResult);
+
+      const res = await user.updateDataDriver("2a4c03c4-6281-4310-bf6d-78470889a01e",payload);
+
+      assert.equal(res.data, 'updated');
+      query.prototype.findOneUser.restore();
+      command.prototype.upsertOneUser.restore();
+      command.prototype.insertOneWallet.restore();
+    });
+    it('should error updated < 1 month', async() => {
+      sinon.stub(query.prototype, 'findOneUser').resolves({ data: {
+        mitra:true,
+        mobileNumber: "+6281190090677",
+        fullName: "Farid Tri Wicaksono",
+        password: "391b8d7b4101ac8860d988dbb7ad288e:52b8c24150d7a696700626249285d6dc",
+        userId: "2a4c03c4-6281-4310-bf6d-78470889a01e",
+        updated: moment().toDate()
+      } });
+
+      const res = await user.updateDataDriver("2a4c03c4-6281-4310-bf6d-78470889a01e",payload);
+      assert.equal(res.data, null);
+      query.prototype.findOneUser.restore();
+    });
+    it('should error not mitra', async() => {
+      sinon.stub(query.prototype, 'findOneUser').resolves({ data: {
+        mitra:false,
+        mobileNumber: "+6281190090677",
+        fullName: "Farid Tri Wicaksono",
+        password: "391b8d7b4101ac8860d988dbb7ad288e:52b8c24150d7a696700626249285d6dc",
+        userId: "2a4c03c4-6281-4310-bf6d-78470889a01e"
+      } });
+
+      const res = await user.updateDataDriver("2a4c03c4-6281-4310-bf6d-78470889a01e",payload);
+      assert.equal(res.data, null);
+      query.prototype.findOneUser.restore();
+    });
+    it('should return error', async() => {
+      sinon.stub(query.prototype, 'findOneUser').resolves({data:null});
+
+      const res = await user.updateDataDriver("2a4c03c4-6281-4310-bf6d-78470889a01e",payload);
+      assert.equal(res.data, null);
+      query.prototype.findOneUser.restore();
+    });
+    it('should error updateDataDriver', async() => {
+      sinon.stub(query.prototype, 'findOneUser').resolves({ data: {
+        mitra:true,
+        mobileNumber: "+6281190090677",
+        fullName: "Farid Tri Wicaksono",
+        password: "391b8d7b4101ac8860d988dbb7ad288e:52b8c24150d7a696700626249285d6dc",
+        userId: "2a4c03c4-6281-4310-bf6d-78470889a01e"
+      } });
+      sinon.stub(command.prototype, 'upsertOneUser').resolves({err:'err'});
+      sinon.stub(command.prototype, 'insertOneWallet').resolves(queryResult);
+
+      const res = await user.updateDataDriver("2a4c03c4-6281-4310-bf6d-78470889a01e",payload);
+
+      assert.notEqual(res.data, 'updated');
+      query.prototype.findOneUser.restore();
+      command.prototype.upsertOneUser.restore();
+      command.prototype.insertOneWallet.restore();
+    });
+    it('should error create wallet', async() => {
+      sinon.stub(query.prototype, 'findOneUser').resolves({ data: {
+        mitra:true,
+        mobileNumber: "+6281190090677",
+        fullName: "Farid Tri Wicaksono",
+        password: "391b8d7b4101ac8860d988dbb7ad288e:52b8c24150d7a696700626249285d6dc",
+        userId: "2a4c03c4-6281-4310-bf6d-78470889a01e"
+      } });
+      sinon.stub(command.prototype, 'upsertOneUser').resolves(queryResult);
+      sinon.stub(command.prototype, 'insertOneWallet').resolves({err:'err'});
+
+      const res = await user.updateDataDriver("2a4c03c4-6281-4310-bf6d-78470889a01e",payload);
+
+      assert.notEqual(res.data, 'updated');
+      query.prototype.findOneUser.restore();
+      command.prototype.upsertOneUser.restore();
+      command.prototype.insertOneWallet.restore();
     });
   });
 

@@ -109,4 +109,23 @@ describe('User Api Handler', () => {
       commandHandler.registerDriver.restore();
     });
   });
+  
+  describe('updateDataDriver', () => {
+    it('should return error validation', () => {
+      userHandler.updateDataDriver(req, res);
+    });
+    it('should return success', () => {
+      sinon.stub(commonHelper, 'isValidPayload').resolves({
+        err: null,
+        data: {}
+      });
+      sinon.stub(commandHandler, 'updateDataDriver').resolves({
+        err: null,
+        data: {}
+      });
+      userHandler.updateDataDriver(req, res);
+      commonHelper.isValidPayload.restore();
+      commandHandler.updateDataDriver.restore();
+    });
+  });
 });
