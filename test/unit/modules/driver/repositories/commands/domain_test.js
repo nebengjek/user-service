@@ -22,11 +22,6 @@ describe('User-domain', () => {
     'code': 200
   };
 
-  let payload = {
-    'username': 'email@gmail.com',
-    'password': 'assessment123'
-  };
-
   const db = {
     setCollection: sinon.stub()
   };
@@ -44,7 +39,10 @@ describe('User-domain', () => {
   });
 
   describe('generateCredential', () => {
-
+    const payload = {
+      'username': 'email@gmail.com',
+      'password': 'assessment123'
+    };
     it('should generate jwt token', async() => {
       sinon.stub(query.prototype, 'findOneUser').resolves(queryResult);
       sinon.stub(commonHelper, 'decryptWithIV').returns(payload.password);
@@ -88,7 +86,11 @@ describe('User-domain', () => {
   });
 
   describe('register', () => {
-
+    const payload = {
+      'fullName':'Farid Tri Wicaksono',
+      'username': 'email@gmail.com',
+      'password': 'assessment123'
+    };
     it('should success register', async() => {
       sinon.stub(query.prototype, 'findOneUser').resolves({ data: null});
       sinon.stub(command.prototype, 'insertOneUser').resolves(queryResult);
@@ -115,7 +117,7 @@ describe('User-domain', () => {
   });
   
   describe('updateDataDriver', () => {
-    payload = {
+    const payload = {
       "email": "farid@gmail.com",
       "city": "Jakarta",
       "province": "DKI Jakarta",
