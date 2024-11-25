@@ -1,5 +1,6 @@
 
 const commonHelper = require('all-in-one');
+const moment = require('moment');
 const { v4: uuid } = require('uuid');
 const Query = require('../queries/query');
 const Command = require('./command');
@@ -8,7 +9,7 @@ const jwt = require('../../../../auth/jwt_auth_helper');
 
 const wrapper = commonHelper.Wrapper;
 const common = require('../../utils/common');
-const moment = require('moment');
+
 const { NotFoundError, UnauthorizedError, ConflictError, InternalServerError } = commonHelper.Error;
 const config = require('../../../../infra');
 

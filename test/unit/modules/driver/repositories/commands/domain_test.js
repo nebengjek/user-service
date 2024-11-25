@@ -22,7 +22,7 @@ describe('User-domain', () => {
     'code': 200
   };
 
-  const payload = {
+  let payload = {
     'username': 'email@gmail.com',
     'password': 'assessment123'
   };
@@ -115,7 +115,7 @@ describe('User-domain', () => {
   });
   
   describe('updateDataDriver', () => {
-    const payload = {
+    payload = {
       "email": "farid@gmail.com",
       "city": "Jakarta",
       "province": "DKI Jakarta",

@@ -1,6 +1,7 @@
 
 const commonHelper = require('all-in-one');
 const _ = require('lodash');
+
 const wrapper = commonHelper.Wrapper;
 const commandHandler = require('../repositories/commands/command_handler');
 const commandModel = require('../repositories/commands/command_model');

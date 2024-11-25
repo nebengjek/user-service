@@ -47,7 +47,6 @@ const verifyToken = async (req, res,next) => {
   }
   let decodedToken;
   try {
-    console.log(verifyOptions,"<<<verifyOptions")
     decodedToken = jwt.verify(token, publicKey, verifyOptions);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
