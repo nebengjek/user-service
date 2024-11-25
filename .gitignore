@@ -15,10 +15,10 @@ log
 .vscode
 .env
 coverage
-.github/
-deploy/
+# .github/
+# deploy/
 .nyc_output
-
+.scannerwork
 # secrets
 .env
 .env.local
