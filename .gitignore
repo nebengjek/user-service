@@ -15,6 +15,8 @@ log
 .vscode
 .env
 coverage
+.github/
+deploy/
 .nyc_output
 
 # secrets
