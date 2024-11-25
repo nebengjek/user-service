@@ -1,9 +1,9 @@
 # User Service
 This project written in javascript using ExpressJS based on a clean architecture that represents DDD and CQRS patterns. 
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=thrive-roadshow_node-thrive&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=thrive-roadshow_node-thrive)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=thrive-roadshow_node-thrive&metric=coverage)](https://sonarcloud.io/summary/new_code?id=thrive-roadshow_node-thrive)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=thrive-roadshow_node-thrive&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=thrive-roadshow_node-thrive)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nebengjek_user-service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nebengjek_user-service)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nebengjek_user-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=nebengjek_user-service)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nebengjek_user-service&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=nebengjek_user-service)
 
 ## Project Structure
 - [ ] `src/`
