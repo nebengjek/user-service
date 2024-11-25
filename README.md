@@ -1,4 +1,4 @@
-# Node Service
+# User Service
 This project written in javascript using ExpressJS based on a clean architecture that represents DDD and CQRS patterns. 
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=thrive-roadshow_node-thrive&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=thrive-roadshow_node-thrive)
@@ -43,6 +43,7 @@ To run this project, make sure that all prerequisites above are installed on you
    ```
    $ npm install
    ```
+3. Set file .env base on .env.example
 
 4. Start the server:
    ```
@@ -71,6 +72,19 @@ To fix simple error code format, run this command
 ```
 $ npm run lint:fix
 ```
+
+## NEBENGJEK
+### Description
+NebengJek is a ride-sharing app that connects users with shared rides, system is very lite, simple,
+and fast. Users can either be Riders, requesting a ride, or Drivers, offering their vehicle. 
+Both can choose whom to ride with, as long as they're within a specific area.
+
+### Architecture
+
+### System Flow
+
+### DFD
+
 
 ### Author
 * [Farid Tri Wicaksono](https://github.com/farid-alfernass)
