@@ -2,7 +2,7 @@ require('dotenv').config();
 const confidence = require('confidence');
 
 const config = {
-   port: process.env.PORT,
+   port: process.env.APP_PORT,
    basicAuthApi:
       {
          username: process.env.BASIC_AUTH_USERNAME,

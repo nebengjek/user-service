@@ -83,6 +83,8 @@ Both can choose whom to ride with, as long as they're within a specific area.
 
 ### System Flow
 
+![NebengJek System Flow](NebengJek.drawio.png)
+
 ### DFD
 
 
