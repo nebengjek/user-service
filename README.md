@@ -80,6 +80,7 @@ and fast. Users can either be Riders, requesting a ride, or Drivers, offering th
 Both can choose whom to ride with, as long as they're within a specific area.
 
 ### Architecture
+![NebengJek Architecture](NebengJek.jpg)
 
 ### System Flow
 
