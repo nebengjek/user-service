@@ -29,14 +29,13 @@ class User {
       commonHelper.log(['ERROR'],{ctx, error:user.err, message:'user not found'});
       return wrapper.error(new NotFoundError('user not found'));
     }
-    
-    const decryptedPassword = await commonHelper.decryptWithIV(user.data.password, algorithm, secretKey);
+    const decryptedPassword = await commonHelper.decryptWithIV(user.data[0].password, algorithm, secretKey);
     if (decryptedPassword !== payload.password) {
       commonHelper.log(['ERROR'],'password invalid');
       return wrapper.error(new UnauthorizedError('password invalid!'));
     }
 
-    const accessToken = await jwt.generateToken({sub: user.data.userId, metadata: user.data});
+    const accessToken = await jwt.generateToken({sub: user.data[0].userId, metadata: user.data[0]});
     return wrapper.data({
       accessToken
     });
@@ -53,16 +52,18 @@ class User {
     delete payload.username;
 
     const encryptedPassword = await commonHelper.encryptWithIV(payload.password, algorithm, secretKey);
-    const { data: result } = await this.command.insertOneUser({
+    
+    const { data: result, err: error } = await this.command.insertOneUser({
       ...filterData,
       ...payload,
       userId: uuid(),
       password: encryptedPassword
     });
-
-    delete result.password;
-    delete result.isConfirmed;    
-    return wrapper.data(result);
+    if (error) {
+      commonHelper.log(['ERROR'],{ctx, error, message:'failed to register user'});
+      return wrapper.error(new Error('failed to register user'));
+    }
+    return wrapper.data();
   }
 }
 

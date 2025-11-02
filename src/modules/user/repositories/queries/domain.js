@@ -16,10 +16,8 @@ class User {
     if (user.err) {
       return wrapper.error(new NotFoundError('Can not find user'));
     }
-    const { data } = user;
-    delete data._id;
-    delete data.password;
-    return wrapper.data(data);
+    delete user.data[0].password;
+    return wrapper.data(user.data[0]);
   }
 
 }

@@ -34,7 +34,13 @@ const config = {
          },
       },
    },
-   mongoDbUrl: process.env.MONGO_DATABASE_URL,
+   mysqlConfig: {
+      connectionLimit: process.env.MYSQL_CONNECTION_LIMIT,
+      host: process.env.MYSQL_HOST,
+      user: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE
+   },
    redis: {
       connection: {
          host: process.env.REDIS_CLIENT_HOST,

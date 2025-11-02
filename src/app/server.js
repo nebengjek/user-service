@@ -6,9 +6,6 @@ const correlator = require('express-correlation-id');
 const healtCheck = require('./health_check');
 const config = require('../infra');
 const routes = require('../routes');
-const mongoConnectionPooling = require('../helpers/databases/mongodb/connection');
-
-const mongoConfig = config.get('/mongoDbUrl');
 class AppServer {
 
   constructor() {
@@ -41,8 +38,6 @@ class AppServer {
     });
 
     routes(this.server);
-
-    mongoConnectionPooling.init(mongoConfig);
   }
 }
 

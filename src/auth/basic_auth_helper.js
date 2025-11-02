@@ -3,13 +3,12 @@ const commonHelper = require('all-in-one');
 
 const wrapper = commonHelper.Wrapper;
 const { UnauthorizedError } = commonHelper.Error;
-const validate = require('validate.js');
 const config = require('../infra');
 
 const isAuthenticated = async (req, res, next) => {
   const result = { err: null, data: null };
   const authHeader = req.headers.authorization;
-  if (validate.isEmpty(authHeader) || !authHeader.startsWith('Basic ')) {
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
     result.err = new UnauthorizedError('Token is not valid');
     return wrapper.response(res, 'fail', result, 'Token is not valid!', 401);
   }

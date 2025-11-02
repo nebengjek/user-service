@@ -25,7 +25,7 @@ const loginDriver = async (req, res) => {
 };
 
 const getDriver = async (req, res) => {
-  const { userId } = req.userMeta;
+  const { user_id:userId } = req.userMeta;
   const getData = async () => queryHandler.getDriver(userId);
   const sendResponse = async (result) => {
     (result.err)
@@ -50,7 +50,7 @@ const registerDriver = async (req, res) => {
 };
 
 const updateDataDriver = async (req, res) => {
-  const { email,mobileNumber,userId } = req.userMeta;
+  const { email,mobile_number:mobileNumber,user_id:userId } = req.userMeta;
   req.body.mobileNumber = _.isEmpty(mobileNumber) ? req.body.mobileNumber : mobileNumber
   req.body.email = _.isEmpty(email) ? req.body.email : email
   const payload = req.body;

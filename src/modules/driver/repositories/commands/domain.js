@@ -63,11 +63,8 @@ class User {
       mitra: true,
       verify: true,
       completed: false
-    });
-
-    delete result.password;
-    delete result.isConfirmed;    
-    return wrapper.data(result);
+    });    
+    return wrapper.data();
   }
   
   async updateDataDriver(userId,payload) {
@@ -77,7 +74,7 @@ class User {
       commonHelper.log(['ERROR'],`${ctx} user notexist`);
       return wrapper.error(new NotFoundError('user notfound'));
     }
-    if(!user.data.mitra){
+    if(!user.data.isMitra){
       commonHelper.log(['ERROR'],`${ctx} user not driver`);
       return wrapper.error(new ConflictError('user not driver'));
     }
@@ -88,28 +85,32 @@ class User {
 
 
     user.data.email = payload.email;
-    user.data.mobileNumber = payload.mobileNumber;
-    user.data.completed = true;
+    user.data.mobile_number = payload.mobileNumber;
+    user.data.isCompleted = true;
     
-    delete user.data._id;
     delete payload.email;
     delete payload.mobileNumber;
     const result = await this.command.upsertOneUser({userId},{
       ...user.data,
-      ...payload,
-      updated: moment().toDate()
     });
     if (result.err){
       commonHelper.log(['ERROR'],`${ctx} failed update data`);
       return wrapper.error(new InternalServerError('failed update data'));
     }
+    // insert info driver
+    const upsertDriver = await this.command.upsertInfoDriver({
+      userId,
+      ...payload
+    });
+    if (upsertDriver.err){
+      commonHelper.log(['ERROR'],`${ctx} failed upsert info driver`);
+      return wrapper.error(new InternalServerError('failed upsert info driver'));
+    }
     
     // create wallet
     const CreateWallet = await this.command.insertOneWallet({
       userId,
-      balance: 0,
-      lastUpdated:moment().toDate(),
-      transactionLog: []
+      balance: 0
     });
     if (CreateWallet.err){
       commonHelper.log(['ERROR'],`${ctx} failed create wallet data`);

@@ -1,7 +1,8 @@
 
 const logger = require('all-in-one');
 
-const mongoConnectionPooling = require('../helpers/databases/mongodb/connection');
+const mysqlConnectionPooling = require('../helpers/databases/mysql/connection');
+const config = require('../infra');
 
 const MAX_RETRIES = 3;
 const RETRY_INTERVAL = 5000; // 5 seconds
@@ -19,10 +20,23 @@ const shutdown = async (server) => {
 };
 
 const checkServiceHealth = async (server) => {
-  const mongoConnection = await mongoConnectionPooling.init();
-  if (!mongoConnection) {
-    handleUnhealthyService(server);
-    
+  try {
+    const mysqlStatus = await mysqlConnectionPooling.checkConnectionStatus(config.get('/mysqlConfig'));
+
+    if (mysqlStatus.connected) {
+      if (retries > 0) {
+        logger.log(['Connection'],'Database reconnected successfully after retry.');
+      } else {
+        logger.log(['INFO'],'Database connection healthy.');
+      }
+      retries = 0; // reset counter
+    } else {
+      logger.log(['Connection'],`Database unhealthy: ${mysqlStatus.message}`);
+      await handleUnhealthyService(server);
+    }
+  } catch (error) {
+    logger.log(['Connection'],`Error while checking DB health: ${error.message}`);
+    await handleUnhealthyService(server);
   }
 };
 
@@ -41,4 +55,4 @@ const handleUnhealthyService = async (server) => {
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Start the initial health check
-module.exports = { checkServiceHealth };
+module.exports = { checkServiceHealth,shutdown, delay };
