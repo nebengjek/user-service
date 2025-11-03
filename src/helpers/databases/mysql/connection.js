@@ -34,15 +34,12 @@ const checkConnectionStatus = async (config) => {
       db = await createConnectionPool(config);
     }
     if (!db) {
-      console.log('No connection pool found');
       return { connected: false, message: 'No connection pool found' };
     }
 
-    // Jalankan query ringan untuk memastikan koneksi hidup
     await db.promise().query('SELECT 1');
     return { connected: true, message: 'Connection OK' };
   } catch (error) {
-    console.log('Database connection error:', error.message);
     return { connected: false, message: error.message };
   }
 };
